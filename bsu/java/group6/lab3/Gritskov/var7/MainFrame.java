@@ -183,9 +183,46 @@ public class MainFrame extends JFrame{
 				getContentPane().validate();
 			}
 		});
+		
+		Box hboxButtons = Box.createHorizontalBox();
+		hboxButtons.setBorder(BorderFactory.createBevelBorder(1));
+		hboxButtons.add(Box.createHorizontalGlue());
+		hboxButtons.add(buttonCalc);
+		hboxButtons.add(Box.createHorizontalStrut(30));
+		hboxButtons.add(buttonReset);
+		hboxButtons.add(Box.createHorizontalGlue());
+		hboxButtons.setPreferredSize(new Dimension(new Double(hboxButtons.getMaximumSize().getWidth()).intValue(), 
+				new Double(hboxButtons.getMinimumSize().getHeight()).intValue()*2) );
+		getContentPane().add(hboxButtons, BorderLayout.NORTH);
+		hBoxResult = Box.createHorizontalBox();
+		hBoxResult.add(new JPanel());
+		getContentPane().add(hBoxResult, BorderLayout.CENTER);
 	}
 	
-	
+	protected void saveToTextFile(File selectedFile) {
+		try {
+			PrintStream out = new PrintStream(selectedFile);
+			out.println("Результаты табулирования многочлена по схеме Горнера");
+			out.print("Многочлен: ");
+			for (int i=0; i<coefficients.length; i++) {
+				out.print(coefficients[i] + "*X^" + (coefficients.length-i-1));
+				if (i!=coefficients.length-1) {
+					out.print(" + ");
+				}
+			}
+			out.println("");
+			out.println("Интервал от " + data.getFrom() + " до " + data.getTo() + " с шагом " + data.getStep());
+			out.println("================================================");
+			for (int i = 0; i<data.getRowCount(); i++) {
+				out.println("Значение в точке " + data.getValueAt(i,0) +
+				" равно " + data.getValueAt(i,1));
+			}
+			out.close();
+		}
+		catch (FileNotFoundException e){
+			
+		}
+	}
 
 	public static void main(String[] args) {
 		
