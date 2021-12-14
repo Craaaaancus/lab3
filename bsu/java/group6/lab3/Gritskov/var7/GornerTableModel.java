@@ -38,6 +38,56 @@ public class GornerTableModel extends AbstractTableModel {
 	public void setStep(Double step) {
 		this.step = step;
 	}
+	
+	@Override
+	public int getRowCount() {
+		return new Double(Math.ceil((to-from)/step)).intValue() + 1;
+	}
 
+	@Override
+	public int getColumnCount() {
+		return 3;
+	}
+
+	@Override
+	public String getColumnName(int col) {
+		switch(col) {
+		case 0:
+			return "X value";
+		case 1:
+			return "POLINOMIAN value";
+		default:
+			return "Even integer part";
+		}
+	}
+	
+	@Override
+	public Class<?> getColumnClass(int col) {
+		switch(col) {
+			case 0:
+			case 1:
+				return Double.class;
+			default:
+				return Boolean.class;
+		}
+	}
+
+	@Override
+	public Object getValueAt(int row, int col) {
+		double x = from + step*row;
+		if (col == 0) {
+			return x;
+		}
+		Double result = 0.0;
+		for (int i = 0; i < coefficients.length; i++) {
+			result += coefficients[i] * Math.pow(x, coefficients.length-i-1);
+		}
+		if (col == 1) {
+			return result;
+		}
+		else {
+			return (result.intValue() % 2) == 0;
+		}
+	}
 	
 }
