@@ -143,6 +143,31 @@ public class MainFrame extends JFrame{
 				new Double(hboxRange.getMinimumSize().getHeight()).intValue()*2
 				));
 		getContentPane().add(hboxRange, BorderLayout.SOUTH);
+		
+		JButton buttonCalc = new JButton("Calculate");
+		buttonCalc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				try {
+					Double from = Double.parseDouble(textFieldFrom.getText());
+					Double to = Double.parseDouble(textFieldTo.getText());
+					Double step = Double.parseDouble(textFieldStep.getText());
+					data = new GornerTableModel(from, to, step, MainFrame.this.coefficients);
+					JTable table = new JTable(data);
+					table.setDefaultRenderer(Double.class, renderer);
+					table.setRowHeight(30);
+					hBoxResult.removeAll();
+					hBoxResult.add(new JScrollPane(table));
+					getContentPane().validate();
+					saveToTextMenuItem.setEnabled(true);
+					saveToGraphicsMenuItem.setEnabled(true);
+					searchValueMenuItem.setEnabled(true);
+				}
+				catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(MainFrame.this, "Ошибка в формате записи числа с плавающей точкой", 
+							"Ошибочный формат числа", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 	}
 	
 	
