@@ -92,6 +92,57 @@ public class MainFrame extends JFrame{
 		saveToGraphicsMenuItem = fileMenu.add(saveToGraphicsAction);
 		saveToGraphicsMenuItem.setEnabled(false);
 		
+		
+		Action searchValueAction = new AbstractAction("Found polinom") {
+			public void actionPerformed(ActionEvent event) {
+				String value = JOptionPane.showInputDialog(MainFrame.this, "Enter value", "Found value", JOptionPane.QUESTION_MESSAGE);
+				renderer.setNeedle(value);
+				getContentPane().repaint();
+			}
+		};
+		searchValueMenuItem = tableMenu.add(searchValueAction);
+		searchValueMenuItem.setEnabled(false);
+		
+		Action aboutProgramAction = new AbstractAction("About program") {
+			public void actionPerformed(ActionEvent event) {
+				JLabel info = new JLabel ("Author: Gritskov Denis;  Group: 6");
+				JOptionPane.showMessageDialog(MainFrame.this, info, "Information about myself", JOptionPane.PLAIN_MESSAGE);
+			}
+		};
+		helpMenu.add(aboutProgramAction);
+		
+		JLabel labelForFrom = new JLabel("X changes from:");
+		textFieldFrom = new JTextField("0.0", 10);
+		textFieldFrom.setMaximumSize(textFieldFrom.getPreferredSize());
+		
+		JLabel labelForTo = new JLabel("to:");
+		textFieldTo = new JTextField("1.0", 10);
+		textFieldTo.setMaximumSize(textFieldTo.getPreferredSize());
+		
+		JLabel labelForStep = new JLabel("with step:");
+		textFieldStep = new JTextField("0.1", 10);
+		textFieldStep.setMaximumSize(textFieldStep.getPreferredSize());
+		
+		Box hboxRange = Box.createHorizontalBox();
+		hboxRange.setBorder(BorderFactory.createBevelBorder(1));
+		hboxRange.add(Box.createHorizontalGlue());
+		hboxRange.add(labelForFrom);
+		hboxRange.add(Box.createHorizontalStrut(10));
+		hboxRange.add(textFieldFrom);
+		hboxRange.add(Box.createHorizontalStrut(20));
+		hboxRange.add(labelForTo);
+		hboxRange.add(Box.createHorizontalStrut(10));
+		hboxRange.add(textFieldTo);
+		hboxRange.add(Box.createHorizontalStrut(20));
+		hboxRange.add(labelForStep);
+		hboxRange.add(Box.createHorizontalStrut(10));
+		hboxRange.add(textFieldStep);
+		hboxRange.add(Box.createHorizontalGlue());
+		hboxRange.setPreferredSize(new Dimension(
+				new Double(hboxRange.getMaximumSize().getWidth()).intValue(),
+				new Double(hboxRange.getMinimumSize().getHeight()).intValue()*2
+				));
+		getContentPane().add(hboxRange, BorderLayout.SOUTH);
 	}
 	
 	
