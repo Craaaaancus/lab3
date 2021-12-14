@@ -26,9 +26,27 @@ public class GornerTableCellRenderer implements TableCellRenderer {
 
 	
 	public GornerTableCellRenderer() {
+		panel.add(label);
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
+		formatter.setMaximumFractionDigits(5);
+		formatter.setGroupingUsed(false);
+		DecimalFormatSymbols dottedDouble = formatter.getDecimalFormatSymbols();
+		dottedDouble.setDecimalSeparator('.');
+		formatter.setDecimalFormatSymbols(dottedDouble);
 	}
 
-	
+	@Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+		String formattedDouble = formatter.format(value);
+		label.setText(formattedDouble);
+		if ((col == 0 || col == 1) && needle != null && needle.equals(formattedDouble)) {
+			panel.setBackground(Color.RED);
+		}
+		else {
+			panel.setBackground(Color.WHITE);	
+		}
+		return panel;
+	}
 
 }
