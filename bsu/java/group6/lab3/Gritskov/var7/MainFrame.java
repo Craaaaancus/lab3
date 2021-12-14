@@ -223,6 +223,20 @@ public class MainFrame extends JFrame{
 			
 		}
 	}
+	
+	protected void saveToGraphicsFile(File selectedFile) {
+		try {
+			DataOutputStream out = new DataOutputStream(new FileOutputStream(selectedFile));
+			for (int i = 0; i<data.getRowCount(); i++) {
+				out.writeDouble((Double)data.getValueAt(i,0));
+				out.writeDouble((Double)data.getValueAt(i,1));
+			}
+			out.close();
+		} 
+		catch (Exception e) {
+		
+		}
+	}
 
 	public static void main(String[] args) {
 		
