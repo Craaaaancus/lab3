@@ -64,6 +64,33 @@ public class MainFrame extends JFrame{
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
 		
+		Action saveToTextAction = new AbstractAction("Save text file") {
+			public void actionPerformed(ActionEvent event) {
+				if (fileChooser == null) {
+					fileChooser = new JFileChooser();
+					fileChooser.setCurrentDirectory(new File("."));
+				}
+				if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					saveToTextFile(fileChooser.getSelectedFile());
+				}
+			}
+		};
+		saveToTextMenuItem = fileMenu.add(saveToTextAction);
+		saveToTextMenuItem.setEnabled(false);
+		
+		Action saveToGraphicsAction = new AbstractAction("Save data for graphic") {
+			public void actionPerformed(ActionEvent event) {
+				if (fileChooser == null) {
+					fileChooser = new JFileChooser();
+					fileChooser.setCurrentDirectory(new File("."));
+				}
+				if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					saveToGraphicsFile(fileChooser.getSelectedFile());
+				}
+			}
+		};
+		saveToGraphicsMenuItem = fileMenu.add(saveToGraphicsAction);
+		saveToGraphicsMenuItem.setEnabled(false);
 		
 	}
 	
